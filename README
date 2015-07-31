@@ -1,5 +1,5 @@
-Unofficial CM device tree for MI3TD(pisces)
-
+Unofficial PAC device tree for MI3TD(pisces)
+fork from MI3TD
 CM12(lollipop):
 	fixed:
 		nfc
