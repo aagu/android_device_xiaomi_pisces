@@ -31,7 +31,7 @@ import org.cyanogenmod.hardware.util.FileUtils;
 
 public class KeyDisabler {
 
-    private static String KEYDISABLER_PATH = "/sys/class/sec/sec_touchkey/keypad_enable";
+    private static String KEYDISABLER_PATH = "/sys/devices/gpio_keys.96/disabled_keys"; /*work for MI3 Cancro but not totally work on MI3 pisces*/
     /*
      * All HAF classes should export this boolean.
      * Real implementations must, of course, return true
