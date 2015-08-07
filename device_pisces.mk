@@ -164,14 +164,12 @@ PRODUCT_PACKAGES += \
     libImmVibeJ
 
 # Miracast/WiDi
-#PRODUCT_PACKAGES += \
-#    NvwfdService \
+PRODUCT_PACKAGES += \
+    NvwfdService \
 
 # Vendor Apps
 PRODUCT_PACKAGES += \
-    AMAPNetworkLocation \
-    Cit \
-    FM \
+    BaiduNetworkLocation \
     NvCPLSvc \
 
 PRODUCT_PACKAGES += \
