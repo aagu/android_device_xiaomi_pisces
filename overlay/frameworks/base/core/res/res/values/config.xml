@@ -400,11 +400,18 @@
          one of the listes values in frameworks/base/core/res/res/values/cm_arrays.xml
          for "perf_profile_values" array. Leave it blank if the device do not support
          performance profiles  -->
-    <string name="config_perf_profile_default_entry" translatable="false">middle</string>
+    <string name="config_perf_profile_default_entry" translatable="false">low</string>
 
     <string-array name="perf_profile_values" translatable="false">
         <item>low</item>
         <item>middle</item>
         <item>high</item>
     </string-array>
+
+    <!--doze-->
+    <string name="config_dozeComponent">com.android.systemui/com.android.systemui.doze.DozeService</string>
+    <integer name="config_screenBrightnessDoze">10</integer>
+    <bool name="config_dozeAfterScreenOff">true</bool>
+    <bool name="config_powerDecoupleInteractiveModeFromDisplay">true</bool>
+
 </resources>
