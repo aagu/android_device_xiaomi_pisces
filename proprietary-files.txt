@@ -54,6 +54,10 @@ etc/power.pisces.rc
 etc/ril_atc_sprd.config
 etc/sdm_200_HOG3x3_Grid3x3_bin5_noproj_zero_reduced.bin
 etc/sdm_200_HOG3x3_Grid3x3_bin5_noproj_zero_reduced.bin.pca
+framework/com.broadcom.bt.jar
+framework/com.broadcom.nfc.jar
+framework/com.vzw.nfc.jar
+framework/org.simalliance.openmobileapi.jar
 lib/egl/libEGL_tegra_impl.so
 lib/egl/libEGL_tegra.so
 lib/egl/libGLESv1_CM_tegra_impl.so
@@ -184,7 +188,6 @@ vendor/firmware/bcm43341/fw_bcmdhd_apsta.bin
 vendor/firmware/bcm43341/fw_bcmdhd.bin
 vendor/firmware/bcm43341/fw_bcmdhd_mfg.bin
 vendor/firmware/bcm43341/fw_bcmdhd_p2p.bin
-vendor/firmware/BCM43341NFCB0_002.001.009.0031.0064_Generic_I2C_NCD_Signed_configdata.ncd
-vendor/firmware/BCM43341NFCB0_002.001.009.0031.0064_Generic_PreI2C_NCD_Signed_configdata.ncd
+vendor/firmware/BCM43341NFCB0_002.001.009.0031.0067_Generic_I2C_NCD_Signed_configdata.ncd
+vendor/firmware/BCM43341NFCB0_002.001.009.0031.0067_Generic_PreI2C_NCD_Signed_configdata.ncd
 vendor/firmware/tlv320aic3262_fw_v1.bin
-vendor/lib/hw/power.pisces.so

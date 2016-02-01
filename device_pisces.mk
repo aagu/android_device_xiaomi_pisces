@@ -18,7 +18,7 @@ DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 PRODUCT_CHARACTERISTICS := nosdcard
 
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config=mtp,adb \
+    persist.sys.usb.config=adb \
     persist.sys.isUsbOtgEnabled=1 \
 
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -69,6 +69,7 @@ PRODUCT_COPY_FILES += \
 
 # init
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/ramdisk/adb_keys:root/adb_keys \
     $(LOCAL_PATH)/ramdisk/fstab.pisces:root/fstab.pisces \
     $(LOCAL_PATH)/ramdisk/fstab.zram_128:root/fstab.zram_128 \
     $(LOCAL_PATH)/ramdisk/fstab.zram_256:root/fstab.zram_256 \
@@ -78,6 +79,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ramdisk/init.modem_sprd.rc:root/init.modem_sprd.rc \
     $(LOCAL_PATH)/ramdisk/init.nv_dev_board.usb.rc:root/init.nv_dev_board.usb.rc \
     $(LOCAL_PATH)/ramdisk/init.pisces.rc:root/init.pisces.rc \
+    $(LOCAL_PATH)/ramdisk/init.quickboot.rc:root/init.quickboot.rc \
     $(LOCAL_PATH)/ramdisk/ueventd.pisces.rc:root/ueventd.pisces.rc \
 
 # safe mount_ext4, dualboot/mount helper script
@@ -92,6 +94,10 @@ PRODUCT_PACKAGES += \
 # phone
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/bin/fild:system/bin/fild \
+
+# powerhal
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/lib/power.pisces.so:system/vendor/lib/hw/power.pisces.so \
 
 # gps
 PRODUCT_COPY_FILES += \
@@ -142,6 +148,13 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     charger_res_images \
 
+# QuickBoot
+PRODUCT_PACKAGES += \
+    QuickBoot \
+
+PRODUCT_COPY_FILES += \
+    bootable/recovery/fonts/18x32.png:root/res/images/font.png \
+
 # Misc
 PRODUCT_PACKAGES += \
     librs_jni \
@@ -153,6 +166,7 @@ PRODUCT_PACKAGES += \
     NfcNci \
     Tag \
     com.android.nfc_extras \
+    SmartcardService \
 
 # USB
 PRODUCT_PACKAGES += \
@@ -169,7 +183,7 @@ PRODUCT_PACKAGES += \
 
 # Vendor Apps
 PRODUCT_PACKAGES += \
-    BaiduNetworkLocation \
+    AMAPNetworkLocation \
     NvCPLSvc \
 
 PRODUCT_PACKAGES += \

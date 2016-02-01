@@ -75,10 +75,9 @@ BOARD_HAS_NO_SELECT_BUTTON       := true
 RECOVERY_SDCARD_ON_DATA          := true
 RECOVERY_GRAPHICS_USE_LINELENGTH := true
 DEVICE_RESOLUTION                := 1080x1920
-TW_CUSTOM_BATTERY_PATH           := /sys/devices/platform/tegra11-i2c.0/i2c-0/0-0036/power_supply/max170xx_battery/
+TW_CUSTOM_BATTERY_PATH           := /sys/class/power_supply/max170xx_battery
 TW_BRIGHTNESS_PATH               := /sys/class/backlight/lm3533-backlight0/brightness
 TW_SECONDARY_BRIGHTNESS_PATH     := /sys/class/backlight/lm3533-backlight1/brightness
-TW_EXCLUDE_SUPERSU               := true
 TW_INCLUDE_CRYPTO                := true
 TW_CUSTOM_THEME                  := $(LOCAL_PATH)/recovery/twres
 
@@ -105,16 +104,16 @@ BOARD_HAS_VIBRATOR_IMPLEMENTATION := ../../device/xiaomi/pisces/vibrator.c
 BOARD_CHARGER_DISABLE_INIT_BLANK := true
 BOARD_CHARGER_ENABLE_SUSPEND := true
 BOARD_CHARGER_SHOW_PERCENTAGE := true
-BACKLIGHT_PATH := /sys/class/backlight/lm3533-backlight0/brightness
 BOARD_HAL_STATIC_LIBRARIES += libhealthd.pisces
 BOARD_RTC_WAKEALARM_PATH := /sys/class/rtc/rtc0/wakealarm
 BOARD_HEALTHD_CUSTOM_CHARGER_RES := $(LOCAL_PATH)/libhealthd/images
+BACKLIGHT_PATH           := /sys/class/backlight/lm3533-backlight0/brightness
+SECONDARY_BACKLIGHT_PATH := /sys/class/backlight/lm3533-backlight1/brightness
 
 # Graphics
-BOARD_EGL_CFG := $(LOCAL_PATH)/egl.cfg
 USE_OPENGL_RENDERER := true
-VSYNC_EVENT_PHASE_OFFSET_NS := 0
-SF_VSYNC_EVENT_PHASE_OFFSET_NS := 1
+VSYNC_EVENT_PHASE_OFFSET_NS := 7500000
+SF_VSYNC_EVENT_PHASE_OFFSET_NS := 5000000
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 
 # Wlan
@@ -129,6 +128,9 @@ WIFI_DRIVER_FW_PATH_AP           := "/vendor/firmware/bcm43341/fw_bcmdhd_apsta.b
 WIFI_DRIVER_FW_PATH_STA          := "/vendor/firmware/bcm43341/fw_bcmdhd.bin"
 WIFI_DRIVER_FW_PATH_P2P          := "/vendor/firmware/bcm43341/fw_bcmdhd_p2p.bin"
 WIFI_DRIVER_MODULE_DEVICE        := bcmdhd
+
+# VPN
+NETD_DISABLE_MULTIUSER_VPN := true
 
 # Sensors
 COMMON_GLOBAL_CFLAGS += -DHAVE_MIUI_SENSORS_BLOB
