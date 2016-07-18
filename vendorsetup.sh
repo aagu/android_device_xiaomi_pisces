@@ -25,6 +25,5 @@ applymi3tdpatch() {
 }
 
 add_lunch_combo cm_pisces-userdebug
-add_lunch_combo cm_pisces-eng
 
 echo "** Make sure you have run after repo sync: applymi3tdpatch"

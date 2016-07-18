@@ -1,0 +1,57 @@
+From f0549bd001cc910c73c27fc94cfab33bb50fbcd2 Mon Sep 17 00:00:00 2001
+From: Xuefer <xuefer@gmail.com>
+Date: Thu, 26 Mar 2015 15:32:55 +0800
+Subject: [PATCH 2/6] init: suppprt exported env for exec
+
+Change-Id: I0b57786a1fe4fba23ddd351048499753bb759bb1
+---
+ init/builtins.c | 12 ++++++++----
+ init/init.c     |  2 +-
+ 2 files changed, 9 insertions(+), 5 deletions(-)
+
+diff --git a/init/builtins.c b/init/builtins.c
+index d4b3f99..41dbae7 100644
+--- a/init/builtins.c
++++ b/init/builtins.c
+@@ -48,6 +48,7 @@
+ #include "log.h"
+ 
+ #include <private/android_filesystem_config.h>
++extern const char *ENV[];
+ 
+ #if BOOTCHART
+ #include "bootchart.h"
+@@ -317,10 +318,13 @@ int do_exec(int nargs, char **args)
+     {
+         char tmp[32];
+         int fd, sz;
+-        get_property_workspace(&fd, &sz);
+-        sprintf(tmp, "%d,%d", dup(fd), sz);
+-        setenv("ANDROID_PROPERTY_WORKSPACE", tmp, 1);
+-        execve(par[0], par, environ);
++        if (properties_inited()) {
++            get_property_workspace(&fd, &sz);
++            sprintf(tmp, "%d,%d", dup(fd), sz);
++            add_environment("ANDROID_PROPERTY_WORKSPACE", tmp);
++        }
++
++        execve(par[0], par, (char **) ENV);
+         exit(0);
+     }
+     else
+diff --git a/init/init.c b/init/init.c
+index 1cce8d8..9a2a10d 100644
+--- a/init/init.c
++++ b/init/init.c
+@@ -98,7 +98,7 @@ static int have_console;
+ static char console_name[PROP_VALUE_MAX] = "/dev/console";
+ static time_t process_needs_restart;
+ 
+-static const char *ENV[32];
++const char *ENV[32];
+ 
+ static unsigned charging_mode = 0;
+ 
+-- 
+2.4.10
+

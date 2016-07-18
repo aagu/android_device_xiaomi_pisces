@@ -1,3 +1,4 @@
+# vim:et:ts=4:sts=4
 LOCAL_PATH := device/xiaomi/pisces
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
@@ -18,12 +19,11 @@ DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 PRODUCT_CHARACTERISTICS := nosdcard
 
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config=adb \
+    persist.sys.usb.config=mtp,adb \
     persist.sys.isUsbOtgEnabled=1 \
 
 PRODUCT_PROPERTY_OVERRIDES += \
     drm.service.enabled=true \
-    ro.com.android.dateformat=yyyy-MM-dd \
 
 # permissions file from AOSP
 PRODUCT_COPY_FILES += \
@@ -38,6 +38,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
     frameworks/native/data/etc/android.hardware.sensor.accelerometer.xml:system/etc/permissions/android.hardware.sensor.accelerometer.xml \
     frameworks/native/data/etc/android.hardware.sensor.barometer.xml:system/etc/permissions/android.hardware.sensor.barometer.xml \
+    frameworks/native/data/etc/android.hardware.sensor.compass.xml:system/etc/permissions/android.hardware.sensor.compass.xml \
     frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:system/etc/permissions/android.hardware.sensor.gyroscope.xml \
     frameworks/native/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
     frameworks/native/data/etc/android.hardware.sensor.proximity.xml:system/etc/permissions/android.hardware.sensor.proximity.xml \
@@ -45,7 +46,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
     frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
-    frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml \
     frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml \
     frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
     frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
@@ -91,13 +91,13 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     dumpe2fs \
 
-# phone
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/bin/fild:system/bin/fild \
+# ril
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.radio.apm_sim_not_pwdn=1 \
 
 # powerhal
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/lib/power.pisces.so:system/vendor/lib/hw/power.pisces.so \
+PRODUCT_PACKAGES += \
+    power.pisces \
 
 # gps
 PRODUCT_COPY_FILES += \
@@ -131,14 +131,27 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/nvaudio_conf.xml:system/etc/nvaudio_conf.xml \
 
 PRODUCT_PACKAGES += \
+    audio.primary.tegra \
     audio.a2dp.default \
     audio.usb.default \
     audio.r_submix.default \
     libaudioutils \
+    libp4hread \
+    audio.usb.default \
     tinycap \
     tinymix \
     tinypcminfo \
     tinyplay \
+
+# Graphic
+PRODUCT_PACKAGES += \
+    hwcomposer.tegra \
+    libnvcap_video \
+    libnvomxadaptor \
+
+# Key layout
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/keylayout,system/usr/keylayout) \
 
 # Misc hardwares
 PRODUCT_PACKAGES += \
@@ -159,6 +172,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     librs_jni \
     libnetcmdiface  \
+    e2fsck \
 
 # NFC
 PRODUCT_PACKAGES += \
@@ -177,14 +191,21 @@ PRODUCT_PACKAGES += \
     immvibed \
     libImmVibeJ
 
-# Miracast/WiDi
-PRODUCT_PACKAGES += \
-    NvwfdService \
-
 # Vendor Apps
 PRODUCT_PACKAGES += \
-    AMAPNetworkLocation \
+    Cit \
     NvCPLSvc \
+    SmartcardService \
+    AppleWifiNlpBackend \
+    IchnaeaNlpBackend  \
+    LocalGsmNlpBackend \
+    LocalWifiNlpBackend \
+    UnifiedNlp \
+    MI3TDSettings 
+
+# Doze
+PRODUCT_PACKAGES += \
+    Doze
 
 PRODUCT_PACKAGES += \
     libwpa_client \

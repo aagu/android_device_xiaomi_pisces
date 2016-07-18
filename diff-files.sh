@@ -5,7 +5,7 @@ echo "You must specify system directory as first argument";
 exit
 fi
 \
-files=(
+files=
 	audio/audio_effects.conf
 	audio/audio_policy.conf
 	audio/nvaudio_conf.xml
@@ -22,7 +22,7 @@ files=(
 	prebuilt-app/NvwfdService.apk
 	prebuilt-app/NvwfdProtocolsPack.apk
 	prebuilt-app/Cit.apk
-)
+
 # prebuilt-app/AMAPNetworkLocation.apk
 
 for targetfile in "${files[@]}"; do

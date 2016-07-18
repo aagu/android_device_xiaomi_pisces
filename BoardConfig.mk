@@ -24,7 +24,7 @@ TARGET_USE_TEGRA_BIONIC_OPTIMIZATION := true
 TARGET_USE_TEGRA11_MEMCPY_OPTIMIZATION := true
 ARCH_ARM_HAVE_TLS_REGISTER := true
 
-BOARD_KERNEL_CMDLINE     := androidboot.selinux=permissive
+BOARD_KERNEL_CMDLINE     += androidboot.hardware=$(TARGET_BOOTLOADER_BOARD_NAME)
 BOARD_KERNEL_BASE        := 0x10000000
 BOARD_KERNEL_PAGESIZE    := 2048
 BOARD_MKBOOTIMG_ARGS     := --ramdisk_offset 0x01000000 --tags_offset 0x00000100
@@ -51,10 +51,14 @@ TARGET_USES_LOGD := false
 # kernel
 TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/kernel
 
+# Power
+COMMON_GLOBAL_CFLAGS += -DHAVE_PRE_LOLLIPOP_POWER_BLOB
+
 # Audio
 USE_LEGACY_AUDIO_POLICY := 1
 COMMON_GLOBAL_CFLAGS += -DHAVE_MIUI_AUDIO_BLOB -DHAVE_PRE_LOLLIPOP_AUDIO_BLOB
 TARGET_NEED_CUTILS_LIST_SYMBOLS := 1
+TARGET_LDPRELOAD := libp4hread.so
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
@@ -79,13 +83,18 @@ TW_CUSTOM_BATTERY_PATH           := /sys/class/power_supply/max170xx_battery
 TW_BRIGHTNESS_PATH               := /sys/class/backlight/lm3533-backlight0/brightness
 TW_SECONDARY_BRIGHTNESS_PATH     := /sys/class/backlight/lm3533-backlight1/brightness
 TW_INCLUDE_CRYPTO                := true
-TW_CUSTOM_THEME                  := $(LOCAL_PATH)/recovery/twres
+TW_USE_BUSYBOX                   := true
+TW_DEFAULT_LANGUAGE := zh_CN
+TW_EXTRA_LANGUAGES := true
+TW_ADDITIONAL_RES := \
+	$(LOCAL_PATH)/recovery/twres/mount_ext4.sh \
 
 TW_RECOVERY_ADDITIONAL_RELINK_FILES := \
     $(CURDIR)/out/target/product/pisces/system/bin/resize2fs \
     $(CURDIR)/out/target/product/pisces/system/bin/dumpe2fs \
 
 TARGET_RECOVERY_DEVICE_MODULES += \
+    auto-mkfs \
     dualboot \
     init.recovery.pisces.rc \
     repartition \
@@ -136,8 +145,9 @@ NETD_DISABLE_MULTIUSER_VPN := true
 COMMON_GLOBAL_CFLAGS += -DHAVE_MIUI_SENSORS_BLOB
 
 # SELinux
-BOARD_SEPOLICY_DIRS += \
-   $(LOCAL_PATH)/sepolicy
+POLICYVERS := 26
+BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
+BOARD_SEPOLICY_DIRS += $(LOCAL_PATH)/sepolicy
 
 # The list below is order dependent
 #BOARD_SEPOLICY_UNION := \
